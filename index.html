@@ -1,0 +1,332 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/script.js" defer></script>
+</head>
+
+<body>
+
+    <!-- Шапка -->
+    <header class="header">
+        <a href="#" class="logo">
+            <span class="logo-icon">✦</span>
+            AI Chef
+        </a>
+    </header>
+
+    <main>
+
+        <!-- Поиск -->
+        <section class="search-section" id="search">
+
+            <h1>Что у вас есть?</h1>
+
+            <p class="search-description">
+                Введите ингредиенты, а ИИ подберёт рецепт
+            </p>
+
+            <form class="search-form" id="search-form">
+                <input
+                    type="text"
+                    id="ingredient-search"
+                    placeholder="Яйца, помидоры, сыр..."
+                    aria-label="Введите ингредиенты"
+                >
+
+                <button type="submit" class="search-button"
+                    aria-label="Найти рецепты">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="10.5" cy="10.5" r="6.5"></circle>
+                        <path d="M15.5 15.5L21 21"></path>
+                    </svg>
+                </button>
+            </form>
+
+        </section>
+
+        <!-- Фильтры -->
+        <section class="filters-section">
+
+            <div class="filters" aria-label="Время приготовления">
+                <button class="tag" type="button">5 минут</button>
+                <button class="tag active" type="button">10 минут</button>
+                <button class="tag" type="button">15 минут</button>
+                <button class="tag" type="button">аэрогриль</button>
+            </div>
+
+        </section>
+
+        <!-- Рецепты -->
+        <section class="recipes-section" id="recipes">
+
+
+            <div class="recipes">
+
+                <!-- Карточка 1 -->
+                <article class="recipe-card">
+
+                    <div class="recipe-image">
+                        <img src="assets/images/omelette.jpg"
+                             alt="Омлет с помидорами и сыром">
+                        <span class="recipe-badge">Завтрак</span>
+                    </div>
+
+                    <div class="recipe-content">
+                        <div class="recipe-title-row">
+                            <h3>Омлет с помидорами и сыром</h3>
+                            <button class="favorite-button"
+                                    type="button"
+                                    aria-label="Добавить в избранное">☆</button>
+                        </div>
+
+
+
+                        <p class="ingredients-title">Ингредиенты:</p>
+                        <ul class="ingredients">
+                            <li>Яйца — 2 шт.</li>
+                            <li>Помидор — 1 шт.</li>
+                            <li>Сыр — 30 г</li>
+                            <li>Соль, перец — по вкусу</li>
+                        </ul>
+
+                        <button class="recipe-arrow"
+                                data-recipe="omelette"
+                                type="button"
+                                aria-label="Открыть рецепт">›</button>
+                    </div>
+
+                </article>
+
+                <!-- Карточка 2 -->
+                <article class="recipe-card">
+
+                    <div class="recipe-image">
+                        <img src="assets/images/salad.jpg"
+                             alt="Салат с томатами и сыром">
+                        <span class="recipe-badge">Обед</span>
+                    </div>
+
+                    <div class="recipe-content">
+                        <div class="recipe-title-row">
+                            <h3>Салат с томатами и сыром</h3>
+                            <button class="favorite-button"
+                                    type="button"
+                                    aria-label="Добавить в избранное">☆</button>
+                        </div>
+
+
+
+                        <p class="ingredients-title">Ингредиенты:</p>
+                        <ul class="ingredients">
+                            <li>Помидоры — 2 шт.</li>
+                            <li>Сыр моцарелла — 80 г</li>
+                            <li>Оливковое масло — 1 ст. л.</li>
+                            <li>Базилик, соль — по вкусу</li>
+                        </ul>
+
+                        <button class="recipe-arrow"
+                                data-recipe="salad"
+                                type="button"
+                                aria-label="Открыть рецепт">›</button>
+                    </div>
+
+                </article>
+
+                <!-- Карточка 3 -->
+                <article class="recipe-card">
+
+                    <div class="recipe-image">
+                        <img src="assets/images/sandwich.jpg"
+                             alt="Сэндвич с сыром и томатами">
+                        <span class="recipe-badge">Перекус</span>
+                    </div>
+
+                    <div class="recipe-content">
+                        <div class="recipe-title-row">
+                            <h3>Сэндвич с сыром и томатами</h3>
+                            <button class="favorite-button"
+                                    type="button"
+                                    aria-label="Добавить в избранное">☆</button>
+                        </div>
+
+
+                        <p class="ingredients-title">Ингредиенты:</p>
+                        <ul class="ingredients">
+                            <li>Хлеб — 2 ломтика</li>
+                            <li>Помидор — 1 шт.</li>
+                            <li>Сыр — 40 г</li>
+                            <li>Сливочное масло — немного</li>
+                        </ul>
+
+                        <button class="recipe-arrow"
+                                data-recipe="sandwich"
+                                type="button"
+                                aria-label="Открыть рецепт">›</button>
+                    </div>
+
+                </article>
+
+                <!-- Карточка 4 -->
+                <article class="recipe-card">
+
+                    <div class="recipe-image">
+                        <img src="assets/images/pasta.jpg"
+                             alt="Паста с томатами и сыром">
+                        <span class="recipe-badge">Ужин</span>
+                    </div>
+
+                    <div class="recipe-content">
+                        <div class="recipe-title-row">
+                            <h3>Паста с томатами и сыром</h3>
+                            <button class="favorite-button"
+                                    type="button"
+                                    aria-label="Добавить в избранное">☆</button>
+                        </div>
+
+
+                        <p class="ingredients-title">Ингредиенты:</p>
+                        <ul class="ingredients">
+                            <li>Паста — 100 г</li>
+                            <li>Помидор — 1 шт.</li>
+                            <li>Сыр — 30 г</li>
+                            <li>Оливковое масло, соль</li>
+                        </ul>
+
+                        <button class="recipe-arrow"
+                                data-recipe="pasta"
+                                type="button"
+                                aria-label="Открыть рецепт">›</button>
+                    </div>
+
+                </article>
+
+                <!-- Карточка 5 -->
+                <article class="recipe-card">
+
+                    <div class="recipe-image">
+                        <img src="assets/images/toast.jpg"
+                             alt="Тост с авокадо и яйцом">
+                        <span class="recipe-badge">Завтрак</span>
+                    </div>
+
+                    <div class="recipe-content">
+                        <div class="recipe-title-row">
+                            <h3>Тост с авокадо и яйцом</h3>
+                            <button class="favorite-button"
+                                    type="button"
+                                    aria-label="Добавить в избранное">☆</button>
+                        </div>
+
+  
+
+                        <p class="ingredients-title">Ингредиенты:</p>
+                        <ul class="ingredients">
+                            <li>Хлеб — 2 ломтика</li>
+                            <li>Авокадо — 1 шт.</li>
+                            <li>Яйцо — 1 шт.</li>
+                            <li>Лимонный сок, соль</li>
+                        </ul>
+
+                        <button class="recipe-arrow"
+                                data-recipe="toast"
+                                type="button"
+                                aria-label="Открыть рецепт">›</button>
+                    </div>
+
+                </article>
+
+                <!-- Карточка 6 -->
+                <article class="recipe-card">
+
+                    <div class="recipe-image">
+                        <img src="assets/images/zucchini.jpg"
+                             alt="Омлет с кабачками и зеленью">
+                        <span class="recipe-badge">Обед</span>
+                    </div>
+
+                    <div class="recipe-content">
+                        <div class="recipe-title-row">
+                            <h3>Омлет с кабачками и зеленью</h3>
+                            <button class="favorite-button"
+                                    type="button"
+                                    aria-label="Добавить в избранное">☆</button>
+                        </div>
+
+   
+
+                        <p class="ingredients-title">Ингредиенты:</p>
+                        <ul class="ingredients">
+                            <li>Яйца — 2 шт.</li>
+                            <li>Кабачок — 1 небольшой</li>
+                            <li>Зелень — небольшой пучок</li>
+                            <li>Соль, перец — по вкусу</li>
+                        </ul>
+
+                        <button class="recipe-arrow"
+                                data-recipe="zucchini"
+                                type="button"
+                                aria-label="Открыть рецепт">›</button>
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- О проекте -->
+        <section class="about-section" id="about">
+         
+            <p>
+                Введи продукты, которые есть дома, и найди идею
+                для вкусного блюда.
+            </p>
+        </section>
+
+    </main>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <a href="mailto:hello@example.com">Контакты</a>
+        <a href="#about">О проекте</a>
+    </footer>
+
+    <!-- Модальное окно рецепта -->
+    <div class="modal" id="recipe-modal" aria-hidden="true">
+
+        <div class="modal-content"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="modal-title">
+
+            <button class="close-modal"
+                    id="close-modal"
+                    type="button"
+                    aria-label="Закрыть">×</button>
+
+            <img id="modal-image" src="" alt="Фото блюда">
+
+            <p class="recipe-time" id="modal-time">10 минут</p>
+
+            <h2 id="modal-title">Название блюда</h2>
+
+            <h3>Ингредиенты</h3>
+            <ul id="modal-ingredients"></ul>
+
+            <h3>Приготовление</h3>
+            <ol id="modal-steps"></ol>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
