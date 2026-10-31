@@ -1,0 +1,590 @@
+
+/* ШРИФТ */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+
+/* ОСНОВА САЙТА */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Manrope', sans-serif;
+    background-color: #FFF8F0;
+    color: #3A4A42;
+}
+
+button,
+input {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+/* ШАПКА */
+.header {
+    background-color: rgba(239, 197, 168, 0.85);
+    padding: 16px 30px;
+    border-bottom: 1px solid #3A4A42;
+}
+
+.logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.logo-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #3A4A42;
+    border-radius: 4px;
+}
+
+
+/* ПОИСК */
+.search-section {
+    text-align: center;
+    padding: 65px 20px 60px;
+    border-bottom: 1px solid #3A4A42;
+}
+
+.search-section h1 {
+    margin: 0 0 12px;
+    font-size: 64px;
+    line-height: 1.15;
+    font-weight: 800;
+}
+
+.search-description {
+    margin: 0 0 20px;
+    font-size: 16px;
+}
+
+.search-form {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    max-width: 440px;
+    margin: 0 auto;
+}
+
+.search-form input {
+    flex: 1;
+    min-width: 0;
+    height: 44px;
+    padding: 0 12px;
+    background-color: #FFFFFF;
+    border: 1px solid #EFC5A8;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #3A4A42;
+}
+
+.search-form input:focus {
+    outline: none;
+    border: 2px solid #F89A59;
+}
+
+.search-button {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color: #F89A59;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.search-button svg {
+    width: 25px;
+    height: 25px;
+    fill: none;
+    stroke: #3A4A42;
+    stroke-width: 1.6;
+}
+
+.search-button:hover {
+    background-color: #EFC5A8;
+}
+
+.search-button:active {
+    background-color: #F89A59;
+    border-color: #3A4A42;
+}
+
+
+/* ФИЛЬТРЫ */
+.filters-section {
+    padding: 20px;
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.tag {
+    min-width: 100px;
+    padding: 9px 16px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    background-color: #F5DED0;
+    color: #3A4A42;
+    font-size: 12px;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.tag:hover {
+    background-color: #F89A59;
+}
+
+.tag:active {
+    background-color: #F89A59;
+    border-color: #3A4A42;
+}
+
+.tag.active {
+    background-color: #F89A59;
+}
+
+.tag:disabled {
+    background-color: #D9D9D9;
+    color: #777777;
+    cursor: not-allowed;
+}
+
+
+/* РЕЦЕПТЫ */
+.recipes-section {
+    padding: 20px 30px 40px;
+}
+
+.section-title {
+    margin: 0 0 25px;
+    text-align: center;
+    font-size: 32px;
+    font-weight: 800;
+}
+
+.recipes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+/* КАРТОЧКА */
+.recipe-card {
+    position: relative;
+    min-width: 0;
+    padding: 5px;
+    background-color: rgba(239, 197, 168, 0.65);
+    border: 1px solid #F89A59;
+    border-radius: 5px;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.recipe-card:hover {
+    box-shadow: 0 4px 12px rgba(58, 74, 66, 0.12);
+}
+
+.recipe-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+.recipe-image img {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+}
+
+.recipe-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 5px 10px;
+    background-color: rgba(255, 248, 240, 0.85);
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+
+/* СОДЕРЖИМОЕ КАРТОЧКИ */
+.recipe-content {
+    position: relative;
+    padding: 7px 5px 35px;
+}
+
+.recipe-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+.recipe-title-row h3 {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.35;
+    font-weight: 600;
+}
+
+.favorite-button {
+    flex-shrink: 0;
+    padding: 0 3px;
+    background: transparent;
+    border: none;
+    color: #3A4A42;
+    font-size: 25px;
+    line-height: 1;
+}
+
+.favorite-button:hover {
+    color: #E76F51;
+}
+
+.favorite-button:active {
+    transform: scale(0.9);
+}
+
+.favorite-button.selected {
+    color: #E76F51;
+}
+
+.recipe-time {
+    margin: 8px 0;
+    font-size: 12px;
+}
+
+.ingredients-title {
+    margin: 10px 0 4px;
+    font-size: 12px;
+}
+
+.ingredients {
+    margin: 0;
+    padding-left: 18px;
+    font-size: 12px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+
+/* СТРЕЛКА */
+.recipe-arrow {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    color: #3A4A42;
+    font-size: 30px;
+    line-height: 1;
+}
+
+.recipe-arrow:hover {
+    background-color: #F89A59;
+}
+
+.recipe-arrow:active {
+    background-color: #EFC5A8;
+}
+
+
+/* UI KIT */
+.ui-kit {
+    margin: 20px 30px 40px;
+    padding: 25px;
+    border: 1px solid #EFC5A8;
+    border-radius: 8px;
+}
+
+.ui-kit-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px;
+}
+
+.ui-kit-item h3 {
+    font-size: 20px;
+    margin: 0 0 15px;
+}
+
+.demo-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.demo-buttons button {
+    min-height: 42px;
+    padding: 10px 14px;
+    background-color: #EFC5A8;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.demo-buttons button:hover {
+    background-color: #F89A59;
+}
+
+.demo-buttons button:active,
+.demo-buttons button.demo-active {
+    background-color: #F89A59;
+    border-color: #E76F51;
+}
+
+.demo-buttons button:disabled {
+    background-color: #D9D9D9;
+    color: #777777;
+}
+
+
+
+/* О ПРОЕКТЕ */
+.about-section {
+    padding: 35px 20px;
+    text-align: center;
+}
+
+.about-section h2 {
+    margin: 0 0 12px;
+    font-size: 32px;
+}
+
+.about-section p {
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+
+/* ФУТЕР */
+.footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px 30px;
+    background-color: rgba(239, 197, 168, 0.85);
+    border-top: 1px solid #EFC5A8;
+}
+
+.footer a {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.footer a:hover {
+    color: #A84C30;
+}
+
+
+/* МОДАЛЬНОЕ ОКНО */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: rgba(58, 74, 66, 0.65);
+}
+
+.modal-content {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 25px;
+    background-color: #FFF8F0;
+    border: 1px solid #F89A59;
+    border-radius: 10px;
+}
+
+.modal-content img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.modal-content h2 {
+    margin: 10px 35px 15px 0;
+    font-size: 28px;
+}
+
+.modal-content h3 {
+    margin: 20px 0 10px;
+    font-size: 18px;
+}
+
+.modal-content li {
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    background-color: #EFC5A8;
+    border: none;
+    border-radius: 5px;
+    font-size: 27px;
+}
+
+.close-modal:hover {
+    background-color: #F89A59;
+}
+
+
+/* ТЕЛЕФОН */
+@media (max-width: 600px) {
+
+    .header {
+        padding: 12px 16px;
+    }
+
+    .logo {
+        font-size: 18px;
+    }
+
+    .search-section {
+        padding: 35px 16px;
+    }
+
+    .search-section h1 {
+        font-size: 36px;
+    }
+
+    .search-description {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .search-form {
+        max-width: 100%;
+    }
+
+    .filters-section {
+        padding: 15px 10px;
+    }
+
+    .filters {
+        gap: 7px;
+    }
+
+    .tag {
+        min-width: auto;
+        padding: 8px 12px;
+        font-size: 11px;
+    }
+
+    .recipes-section {
+        padding: 20px 16px 30px;
+    }
+
+    .section-title {
+        font-size: 24px;
+        margin-bottom: 18px;
+    }
+
+    .recipes {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .recipe-card {
+        padding: 6px;
+    }
+
+    .recipe-image img {
+        height: 190px;
+    }
+
+    .recipe-title-row h3 {
+        font-size: 18px;
+    }
+
+    .ingredients {
+        font-size: 13px;
+    }
+
+    .ui-kit {
+        margin: 15px;
+        padding: 15px;
+    }
+
+    .ui-kit-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-section {
+        padding: 25px 16px;
+    }
+
+    .about-section h2 {
+        font-size: 24px;
+    }
+
+    .footer {
+        padding: 18px 16px;
+    }
+
+    .modal {
+        padding: 12px;
+    }
+
+    .modal-content {
+        padding: 16px;
+    }
+
+    .modal-content img {
+        height: 190px;
+    }
+
+    .modal-content h2 {
+        font-size: 23px;
+    }
+}
