@@ -477,7 +477,24 @@ a {
 .close-modal:hover {
     background-color: #F89A59;
 }
+.close-modal-btn {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    background-color: #F89A59;
+    color: #3A4A42;
+    border: none;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
 
+.close-modal-btn:hover {
+    background-color: #EFC5A8;
+}
 
 /* ТЕЛЕФОН */
 @media (max-width: 600px) {
