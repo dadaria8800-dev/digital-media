@@ -13,18 +13,34 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => console.error("Ошибка загрузки данных:", error));
 
-    // 3. ФУНКЦИЯ 1: РАБОТА ФИЛЬТРОВ (Кнопки "5 минут", "10 минут" и т.д.)
+       // 3. ФУНКЦИЯ 1: РАБОТА ФИЛЬТРОВ (Показ/скрытие карточек)
     const filterTags = document.querySelectorAll('.tag');
-    
+    const allCards = document.querySelectorAll('.recipe-card'); // Получаем все карточки
+
     filterTags.forEach(tag => {
         tag.addEventListener('click', () => {
-            // Сначала убираем класс 'active' у всех кнопок
+            // 1. Убираем класс 'active' у всех кнопок
             filterTags.forEach(t => t.classList.remove('active'));
-            // Потом добавляем класс 'active' той кнопке, по которой кликнули
+            // 2. Добавляем класс 'active' нажатой кнопке
             tag.classList.add('active');
+
+            // 3. Получаем значение фильтра (all, 5, 10 или 15)
+            const filterValue = tag.getAttribute('data-filter');
+
+            // 4. Перебираем все карточки и скрываем/показываем их
+            allCards.forEach(card => {
+                const cardTime = card.getAttribute('data-time');
+
+                if (filterValue === 'all' || cardTime === filterValue) {
+                    // Если выбрано "Все" или время совпало — показываем карточку
+                    card.style.display = 'block'; 
+                } else {
+                    // Иначе скрываем
+                    card.style.display = 'none'; 
+                }
+            });
         });
     });
-
     // 4. ФУНКЦИЯ 2: ИЗБРАННОЕ (Клик по звездочке)
     const favoriteButtons = document.querySelectorAll('.favorite-button');
     

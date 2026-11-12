@@ -55,10 +55,10 @@
         <section class="filters-section">
 
             <div class="filters" aria-label="Время приготовления">
-                <button class="tag" type="button">5 минут</button>
-                <button class="tag active" type="button">10 минут</button>
-                <button class="tag" type="button">15 минут</button>
-                <button class="tag" type="button">аэрогриль</button>
+                 <button class="tag active" data-filter="all" type="button">Все</button>
+                <button class="tag" data-filter="5" type="button">5 минут</button>
+                <button class="tag" data-filter="10" type="button">10 минут</button>
+                <button class="tag" data-filter="15" type="button">15 минут</button>
             </div>
 
         </section>
@@ -70,7 +70,7 @@
             <div class="recipes">
 
                 <!-- Карточка 1 -->
-                <article class="recipe-card">
+                <article class="recipe-card" data-time="10">
 
                     <div class="recipe-image">
                         <img src="assets/images/omelette.jpg"
@@ -105,7 +105,7 @@
                 </article>
 
                 <!-- Карточка 2 -->
-                <article class="recipe-card">
+                <article class="recipe-card" data-time="15">
 
                     <div class="recipe-image">
                         <img src="assets/images/salad.jpg"
@@ -140,7 +140,7 @@
                 </article>
 
                 <!-- Карточка 3 -->
-                <article class="recipe-card">
+                <article class="recipe-card" data-time="5">
 
                     <div class="recipe-image">
                         <img src="assets/images/sandwich.jpg"
@@ -174,7 +174,7 @@
                 </article>
 
                 <!-- Карточка 4 -->
-                <article class="recipe-card">
+                <article class="recipe-card" data-time="20">
 
                     <div class="recipe-image">
                         <img src="assets/images/pasta.jpg"
@@ -208,7 +208,7 @@
                 </article>
 
                 <!-- Карточка 5 -->
-                <article class="recipe-card">
+                <article class="recipe-card" data-time="10">
 
                     <div class="recipe-image">
                         <img src="assets/images/toast.jpg"
@@ -243,7 +243,7 @@
                 </article>
 
                 <!-- Карточка 6 -->
-                <article class="recipe-card">
+                <article class="recipe-card" data-time="15">
 
                     <div class="recipe-image">
                         <img src="assets/images/zucchini.jpg"
