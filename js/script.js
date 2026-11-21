@@ -1,136 +1,268 @@
-let recipesData = []; 
+// ===== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ =====
+let recipesData = [];                 // сюда попадёт массив из JSON
+let activeFilter = 'all';             // текущий активный фильтр
 
-// Ждем, пока вся страница HTML загрузится, прежде чем запускать скрипт
-document.addEventListener('DOMContentLoaded', () => {
-    
-    // 2. ЗАГРУЗКА JSON
-    // Используем fetch, чтобы скачать файл data.json из папки data
-    fetch('data/data.json')
-        .then(response => response.json()) // Превращаем ответ в объект JS
-        .then(data => {
-            recipesData = data; // Сохраняем данные в нашу глобальную переменную
-            console.log("Данные успешно загружены:", recipesData); // Проверка в консоли
-        })
-        .catch(error => console.error("Ошибка загрузки данных:", error));
+// ===== ССЫЛКИ НА DOM =====
+const recipesContainer = document.getElementById('recipes-container');
+const filterTags = document.querySelectorAll('.tag');
 
-       // 3. ФУНКЦИЯ 1: РАБОТА ФИЛЬТРОВ (Показ/скрытие карточек)
-    const filterTags = document.querySelectorAll('.tag');
-    const allCards = document.querySelectorAll('.recipe-card'); // Получаем все карточки
+// Элементы модального окна
+const modal = document.getElementById('recipe-modal');
+const closeBtn = document.getElementById('close-modal');
+const closeBtnBottom = document.getElementById('close-modal-btn');
+const modalImage = document.getElementById('modal-image');
+const modalTime = document.getElementById('modal-time');
+const modalTitle = document.getElementById('modal-title');
+const modalIngredients = document.getElementById('modal-ingredients');
+const modalSteps = document.getElementById('modal-steps');
 
-    filterTags.forEach(tag => {
-        tag.addEventListener('click', () => {
-            // 1. Убираем класс 'active' у всех кнопок
-            filterTags.forEach(t => t.classList.remove('active'));
-            // 2. Добавляем класс 'active' нажатой кнопке
-            tag.classList.add('active');
 
-            // 3. Получаем значение фильтра (all, 5, 10 или 15)
-            const filterValue = tag.getAttribute('data-filter');
+// ===== 1. ЗАГРУЗКА ДАННЫХ ИЗ JSON =====
+async function loadRecipes() {
+    try {
+        const response = await fetch('data/data.json');
 
-            // 4. Перебираем все карточки и скрываем/показываем их
-            allCards.forEach(card => {
-                const cardTime = card.getAttribute('data-time');
+        // Если сервер вернул ошибку (404 и т.п.) — выбрасываем исключение
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
 
-                if (filterValue === 'all' || cardTime === filterValue) {
-                    // Если выбрано "Все" или время совпало — показываем карточку
-                    card.style.display = 'block'; 
-                } else {
-                    // Иначе скрываем
-                    card.style.display = 'none'; 
-                }
-            });
-        });
-    });
-    // 4. ФУНКЦИЯ 2: ИЗБРАННОЕ (Клик по звездочке)
-    const favoriteButtons = document.querySelectorAll('.favorite-button');
-    
-    favoriteButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // toggle - это переключатель. Если класс был, он удалится, если не было - добавится
-            button.classList.toggle('selected');
-            
-            // Меняем текст звездочки (пустая/закрашенная)
-            if (button.classList.contains('selected')) {
-                button.textContent = "★"; // Закрашенная звезда
-            } else {
-                button.textContent = "☆"; // Пустая звезда
-            }
-        });
-    });
+        recipesData = await response.json();
+        console.log('Данные успешно загружены:', recipesData);
 
-    // 5. ФУНКЦИЯ 3 и 4: МОДАЛЬНОЕ ОКНО
-    const modal = document.getElementById('recipe-modal');
-    const closeBtn = document.getElementById('close-modal');
-    const recipeArrows = document.querySelectorAll('.recipe-arrow'); // Все кнопки-стрелочки
+        renderRecipes(recipesData);
+        bindCardEvents();          // навешиваем обработчики на новые карточки
 
-    // Элементы внутри модального окна, которые мы будем менять
-    const modalImage = document.getElementById('modal-image');
-    const modalTime = document.getElementById('modal-time');
-    const modalTitle = document.getElementById('modal-title');
-    const modalIngredients = document.getElementById('modal-ingredients');
-    const modalSteps = document.getElementById('modal-steps');
-
-    // Вешаем клик на каждую стрелочку в карточках
-    recipeArrows.forEach(arrow => {
-        arrow.addEventListener('click', () => {
-            // Получаем id рецепта из атрибута data-recipe
-            const recipeId = arrow.getAttribute('data-recipe');
-            
-            // Ищем нужный рецепт в наших загруженных данных
-            const recipe = recipesData.find(item => item.id === recipeId);
-
-            if (recipe) {
-                // Заполняем модалку данными из JSON
-                modalImage.src = recipe.image;
-                modalTime.textContent = recipe.time;
-                modalTitle.textContent = recipe.title;
-                
-                // Очищаем старые списки ингредиентов и шагов
-                modalIngredients.innerHTML = '';
-                modalSteps.innerHTML = '';
-
-                // Добавляем ингредиенты
-                recipe.ingredients.forEach(ing => {
-                    const li = document.createElement('li');
-                    li.textContent = ing;
-                    modalIngredients.appendChild(li);
-                });
-
-                // Добавляем шаги приготовления
-                recipe.steps.forEach(step => {
-                    const li = document.createElement('li');
-                    li.textContent = step;
-                    modalSteps.appendChild(li);
-                });
-
-                // Показываем модалку (в CSS у нас display: none, меняем на flex)
-                modal.style.display = 'flex';
-                modal.setAttribute('aria-hidden', 'false'); // Для доступности
-            }
-        });
-    });
-
-    // Закрытие модального окна
-    closeBtn.addEventListener('click', () => {
-        modal.style.display = 'none'; // Скрываем
-        modal.setAttribute('aria-hidden', 'true');
-    });
-    
-    // Закрытие по кнопке внизу
-    const closeBtnBottom = document.getElementById('close-modal-btn');
-    if (closeBtnBottom) {
-        closeBtnBottom.addEventListener('click', () => {
-            modal.style.display = 'none';
-            modal.setAttribute('aria-hidden', 'true');
-        });
+    } catch (error) {
+        console.error('Ошибка загрузки данных:', error);
+        showErrorMessage('Не удалось загрузить рецепты. Попробуйте обновить страницу позже.');
     }
+}
 
 
-    // Закрытие модалки по клику на серый фон (вне окна)
-    modal.addEventListener('click', (event) => {
-        if (event.target === modal) {
-            modal.style.display = 'none';
+// ===== 2. СОЗДАНИЕ И ВЫВОД КАРТОЧЕК =====
+function createRecipeCard(recipe) {
+    // Внешний <article> — как в исходном HTML
+    const article = document.createElement('article');
+    article.className = 'recipe-card';
+    article.dataset.time = recipe.timeMinutes;
+
+    // Блок с картинкой и бейджем категории
+    const imageBlock = document.createElement('div');
+    imageBlock.className = 'recipe-image';
+
+    const img = document.createElement('img');
+    img.src = recipe.image;
+    img.alt = recipe.title;
+
+    const badge = document.createElement('span');
+    badge.className = 'recipe-badge';
+    badge.textContent = recipe.category;
+
+    imageBlock.append(img, badge);
+
+    // Контент карточки
+    const content = document.createElement('div');
+    content.className = 'recipe-content';
+
+    const titleRow = document.createElement('div');
+    titleRow.className = 'recipe-title-row';
+
+    const h3 = document.createElement('h3');
+    h3.textContent = recipe.title;
+
+    const favBtn = document.createElement('button');
+    favBtn.className = 'favorite-button';
+    favBtn.type = 'button';
+    favBtn.setAttribute('aria-label', 'Добавить в избранное');
+    favBtn.textContent = '☆';
+
+    titleRow.append(h3, favBtn);
+
+    const ingredientsTitle = document.createElement('p');
+    ingredientsTitle.className = 'ingredients-title';
+    ingredientsTitle.textContent = 'Ингредиенты:';
+
+    const ingredientsList = document.createElement('ul');
+    ingredientsList.className = 'ingredients';
+    recipe.ingredients.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        ingredientsList.appendChild(li);
+    });
+
+    const arrowBtn = document.createElement('button');
+    arrowBtn.className = 'recipe-arrow';
+    arrowBtn.dataset.recipe = recipe.id;
+    arrowBtn.type = 'button';
+    arrowBtn.setAttribute('aria-label', 'Открыть рецепт');
+    arrowBtn.textContent = '›';
+
+    content.append(titleRow, ingredientsTitle, ingredientsList, arrowBtn);
+
+    article.append(imageBlock, content);
+    return article;
+}
+
+function renderRecipes(recipes) {
+    recipesContainer.innerHTML = '';
+    const fragment = document.createDocumentFragment();
+
+    recipes.forEach(recipe => {
+        fragment.appendChild(createRecipeCard(recipe));
+    });
+
+    recipesContainer.appendChild(fragment);
+}
+
+
+// ===== 3. СООБЩЕНИЕ ОБ ОШИБКЕ =====
+function showErrorMessage(message) {
+    recipesContainer.innerHTML = '';
+
+    const errorBox = document.createElement('p');
+    errorBox.className = 'error-message';
+    errorBox.textContent = message;
+
+    // Простое оформление, чтобы сообщение не терялось
+    errorBox.style.cssText = `
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 30px;
+        color: #A84C30;
+        font-size: 16px;
+    `;
+
+    recipesContainer.appendChild(errorBox);
+}
+
+
+// ===== 4. НАВЕШИВАНИЕ СОБЫТИЙ НА КАРТОЧКИ =====
+function bindCardEvents() {
+    // Избранное
+    document.querySelectorAll('.favorite-button').forEach(button => {
+        button.addEventListener('click', () => {
+            button.classList.toggle('selected');
+            button.textContent = button.classList.contains('selected') ? '★' : '☆';
+        });
+    });
+
+    // Стрелка → открыть модалку
+    document.querySelectorAll('.recipe-arrow').forEach(arrow => {
+        arrow.addEventListener('click', () => openRecipeModal(arrow.dataset.recipe));
+    });
+}
+
+
+// ===== 5. МОДАЛЬНОЕ ОКНО =====
+function openRecipeModal(recipeId) {
+    const recipe = recipesData.find(item => item.id === recipeId);
+    if (!recipe) return;
+
+    modalImage.src = recipe.image;
+    modalImage.alt = recipe.title;
+    modalTime.textContent = recipe.time;
+    modalTitle.textContent = recipe.title;
+
+    modalIngredients.innerHTML = '';
+    modalSteps.innerHTML = '';
+
+    recipe.ingredients.forEach(ing => {
+        const li = document.createElement('li');
+        li.textContent = ing;
+        modalIngredients.appendChild(li);
+    });
+
+    recipe.steps.forEach(step => {
+        const li = document.createElement('li');
+        li.textContent = step;
+        modalSteps.appendChild(li);
+    });
+
+    modal.style.display = 'flex';
+    modal.setAttribute('aria-hidden', 'false');
+}
+
+function closeModal() {
+    if (document.activeElement) {
+        document.activeElement.blur();
+    }
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+}
+
+closeBtn.addEventListener('click', closeModal);
+closeBtnBottom.addEventListener('click', closeModal);
+modal.addEventListener('click', (event) => {
+    if (event.target === modal) closeModal();
+});
+
+
+// ===== 6. ФИЛЬТРАЦИЯ =====
+function applyFilter(filterValue) {
+    activeFilter = filterValue;
+
+    document.querySelectorAll('.recipe-card').forEach(card => {
+        const cardTime = Number(card.dataset.time);
+        const matches = filterValue === 'all' || cardTime === Number(filterValue);
+        card.style.display = matches ? 'block' : 'none';
+    });
+}
+
+filterTags.forEach(tag => {
+    tag.addEventListener('click', () => {
+        filterTags.forEach(t => t.classList.remove('active'));
+        tag.classList.add('active');
+        applyFilter(tag.dataset.filter);
+    });
+});
+
+
+// ===== 7. СТАРТ =====
+document.addEventListener('DOMContentLoaded', loadRecipes);
+// ===== 8. МОДАЛЬНЫЕ ОКНА "КОНТАКТЫ" И "О ПРОЕКТЕ" =====
+const contactsModal = document.getElementById('contacts-modal');
+const aboutModal = document.getElementById('about-modal');
+
+const openContactsBtn = document.getElementById('open-contacts');
+const openAboutBtn = document.getElementById('open-about');
+
+const closeContactsBtn = document.getElementById('close-contacts');
+const closeContactsBtnBottom = document.getElementById('close-contacts-btn');
+
+const closeAboutBtn = document.getElementById('close-about');
+const closeAboutBtnBottom = document.getElementById('close-about-btn');
+
+// Функция для открытия
+function openInfoModal(modalElement) {
+    modalElement.style.display = 'flex';
+    modalElement.setAttribute('aria-hidden', 'false');
+}
+
+// Функция для закрытия (с исправлением ошибки aria-hidden)
+function closeInfoModal(modalElement) {
+    if (document.activeElement) {
+        document.activeElement.blur(); // Убираем фокус
+    }
+    modalElement.style.display = 'none';
+    modalElement.setAttribute('aria-hidden', 'true');
+}
+
+// Слушатели для окна "Контакты"
+openContactsBtn.addEventListener('click', () => openInfoModal(contactsModal));
+closeContactsBtn.addEventListener('click', () => closeInfoModal(contactsModal));
+closeContactsBtnBottom.addEventListener('click', () => closeInfoModal(contactsModal));
+
+// Слушатели для окна "О проекте"
+openAboutBtn.addEventListener('click', () => openInfoModal(aboutModal));
+closeAboutBtn.addEventListener('click', () => closeInfoModal(aboutModal));
+closeAboutBtnBottom.addEventListener('click', () => closeInfoModal(aboutModal));
+
+// Закрытие по клику на серый фон для обоих окон
+[contactsModal, aboutModal].forEach(modalEl => {
+    modalEl.addEventListener('click', (event) => {
+        if (event.target === modalEl) {
+            closeInfoModal(modalEl);
         }
     });
 });
-    
